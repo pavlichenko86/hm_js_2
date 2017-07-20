@@ -1,33 +1,29 @@
 //ЗАДАЧА №1
-
-function fun(){
-
- const userBirth = [document.querySelector('input[type="text"]').value];
- const now = new Date();
- const year = [now.getFullYear()]; 
- let shortBirth = userBirth[0].split('');
- const result = year - userBirth;
-
- if(shortBirth.length == 4) {
-     const parag = document.createElement('p');
-     const answer = document.querySelector('.first');
+function writeResult(tag, where, myRes){
+     const parag = document.createElement(tag);
+     const answer = document.querySelector(where);
      answer.appendChild(parag);
-     parag.textContent = "Вам - " + result;
- } else if(shortBirth.length == 2){
-    let ggg = String(result).split('');
-    ggg.splice(0, 2);
-    const parag = document.createElement('p');
-    const answer = document.querySelector('.first');
-     answer.appendChild(parag);
-    parag.textContent = "Вам - " + ggg.join('');
- } else{
-     const parag = document.createElement('p');
-     const answer = document.querySelector('.first');
-     answer.appendChild(parag);
-     parag.textContent = "Год введен в неправильном формате";
- }
-
+     parag.textContent = myRes;
 }
+const userBirth = document.querySelector('input[type="text"]');
+function fun(){
+     const birthValue = userBirth.value;
+     const now = new Date();
+     const year = [now.getFullYear()]; 
+     let shortBirth = birthValue.split('');
+     const result = year - birthValue;
+     let ggg = String(result).split('');
+     ggg.splice(0, 2);
+
+     if(shortBirth.length === 4) {
+         writeResult('p', '.first', result);
+     } else if(shortBirth.length == 2){  
+         writeResult('p', '.first', ggg.join(''));
+     } else{
+         writeResult('p', '.first', 'Год введен в неправильном формате');
+     }
+
+    }
 
 const myButton = document.querySelector('input[type="button"]');
 myButton.addEventListener('click', fun);
@@ -38,24 +34,12 @@ myButton.addEventListener('click', fun);
 function numbers(){
     const firstN = document.querySelector('input[name="first"]').value;
     const secondN = document.querySelector('input[name="second"]').value;
-    if(firstN > secondN){
-        const parag = document.createElement('p');
-        const answer = document.querySelector('.second');
-        answer.appendChild(parag);
-        parag.textContent = firstN;
-    } else if(firstN < secondN){
-        const parag = document.createElement('p');
-        const answer = document.querySelector('.second');
-        answer.appendChild(parag);
-        parag.textContent = secondN;
-    } else if(firstN == secondN){
-        const parag = document.createElement('p');
-        const answer = document.querySelector('.second');
-        answer.appendChild(parag);
-        parag.textContent = "Эти числа равные";
+    if(firstN === secondN){
+        writeResult('p', '.second', "Эти числа равные");
+    } else{
+        writeResult('p', '.second', Math.max(firstN, secondN));
     }
 }
-
      const myres = document.querySelector('.forSecond');
      myres.addEventListener('click', numbers);
 
@@ -65,25 +49,13 @@ function flat(){
     const myFlat = document.querySelector('input[name="third"]').value;
 
     if(myFlat != 0 && myFlat <= 20){
-        const parag = document.createElement('p');
-        const answer = document.querySelector('.third');
-        answer.appendChild(parag);
-        parag.textContent = "Квартира из первого подъезда";
+        writeResult('p', '.third', "Квартира из первого подъезда");
     } else if(myFlat > 20 && myFlat < 65){
-        const parag = document.createElement('p');
-        const answer = document.querySelector('.third');
-        answer.appendChild(parag);
-        parag.textContent = "Квартира со второго подъезда";
+        writeResult('p', '.third', "Квартира со второго подъезда");
     } else if(myFlat > 64 && myFlat < 81){
-        const parag = document.createElement('p');
-        const answer = document.querySelector('.third');
-        answer.appendChild(parag);
-        parag.textContent = "Квартира из третьего подъезда";
+        writeResult('p', '.third', "Квартира из третьего подъезда");
     } else{
-        const parag = document.createElement('p');
-        const answer = document.querySelector('.third');
-        answer.appendChild(parag);
-        parag.textContent = "Нет такой квартиры";
+        writeResult('p', '.third', "Нет такой квартиры");
     }
 }
 
@@ -121,14 +93,18 @@ viewNumber.addEventListener('click', math);
 
 
 //--------------Задачи на цикл for-----------
+function showLoop(where, tag, res){
+    let loopNum = document.querySelector(where);
+    let newPerr = document.createElement(tag);
+    loopNum.appendChild(newPerr);
+    newPerr.textContent = res;
+}
+
 //ЗАДАЧА №1
     function looperr () {
     for(let i = 0; i < 102; i++){
-        if(i%2 == 0) {
-            let loopNum = document.querySelector('.loop1');
-            let newPerr = document.createElement("span");
-            loopNum.appendChild(newPerr);
-            newPerr.textContent = " " + i;
+        if(i%2 === 0) {
+            showLoop('.loop1', 'span', " " + i);
         }
     }
     
@@ -141,10 +117,7 @@ ggg.addEventListener('click', looperr);
     function loopper () {
     
     for(let i = 200; i >= 0; i--){
-            let loopNumb2 = document.querySelector('.loop2');
-            let newPerr2 = document.createElement("span");
-            loopNumb2.appendChild(newPerr2);
-            newPerr2.textContent = " " + i;
+            showLoop('.loop2', 'span', " " + i);
     }
     
 }
@@ -158,50 +131,42 @@ aaa.addEventListener('click', loopper);
     for(let i = 0; i < 101; i++){
             sum += i;
     }
-    let loopNumb3 = document.querySelector('.loop3');
-    let newPerr3 = document.createElement("p");
-    loopNumb3.appendChild(newPerr3);
-    newPerr3.textContent = sum;
-    
+    showLoop('.loop3', 'p', sum);    
 }
 
 const mySum = document.querySelector('.summa');
 mySum.addEventListener('click', summaN);
 
 //ЗАДАЧА №4
- function stepen () {
-    let userNum = parseInt(document.querySelector('input[name="oneStep"]').value); 
-    let userS = parseInt(document.querySelector('input[name="oneS"]').value); 
-    let userStepen = 1;
-    for(let i = 1; i < userS +1; i++){
-          userStepen *= userNum;
-    }
-    let loopStep = document.querySelector('.loop4');
-    let newStep = document.createElement("p");
-    loopStep.appendChild(newStep);
-    newStep.textContent = userStepen;
+    const userNum = document.querySelector('input[name="oneStep"]'); 
+    const userD = document.querySelector('input[name="oneS"]'); 
     
+ function degree () {
+    userNumber = parseInt(userNum.value, 10);
+    userDeg = parseInt(userD.value, 10);
+    let userDegree = 1;
+    for(let i = 1; i < userDeg +1; i++){
+          userDegree *= userNumber;
+    }
+    showLoop('.loop4', 'p', userDegree);
 }
 
 const myStep = document.querySelector('.step');
-myStep.addEventListener('click', stepen);
+myStep.addEventListener('click', degree);
 
 //ЗАДАЧА №5
- function stepenF () {
+ function degreeFun () {
      let i;
      let resF;
 
     for(i = 1; i < 10; i++){
         resF = i*7;
-    let loopStepF = document.querySelector('.loop5');
-    let newStepF = document.createElement("p");
-    loopStepF.appendChild(newStepF);
-    newStepF.textContent = "7 " + "* " + i + " = " + resF;
+        showLoop('.loop5', 'p', "7 " + "* " + i + " = " + resF);
     }   
 }
 
 const myStepF = document.querySelector('.stepF');
-myStepF.addEventListener('click', stepenF);
+myStepF.addEventListener('click', degreeFun);
 
 //ЗАДАЧА №6
  function proizvedFun () {
@@ -209,24 +174,21 @@ myStepF.addEventListener('click', stepenF);
     for(i = 1; i < 51; i++){
         resProizved *= i;
     }   
-    let loopProizved = document.querySelector('.loop6');
-    let newProizved = document.createElement("p");
-    loopProizved.appendChild(newProizved);
-    newProizved.textContent = resProizved;
+    showLoop('.loop6', 'p', resProizved);
 }
 
 const myProizved = document.querySelector('.proizved');
 myProizved.addEventListener('click', proizvedFun);
 
 //ЗАДАЧА №7
+
  function simbolFun () {
-    let simbol = 1000;
-    for(; simbol < 2001; simbol++){
-        //viewSimbol = "&#" + simbol;
-    let loopSimbol = document.querySelector('.loop7');
-    let newSimbol = document.createElement("span");
-    loopSimbol.appendChild(newSimbol);
-    newSimbol.innerHTML = "&#" + simbol;
+    
+    for(let simbol = 1000; simbol < 2001; simbol++){
+        let loopSimbol = document.querySelector('.loop7');
+        let newSimbol = document.createElement("span");
+        loopSimbol.appendChild(newSimbol);
+        newSimbol.innerHTML = "&#" + simbol;
     }   
 }
 
